@@ -1,0 +1,13 @@
+Adafruit-Blinka==6.0.1
+adafruit-circuitpython-ads1x15==2.2.6
+adafruit-circuitpython-busdevice==5.0.4
+Adafruit-GPIO==1.0.3
+Adafruit-PlatformDetect==3.0.0
+Adafruit-PureIO==1.1.8
+jsonpickle==2.0.0
+numpy==1.20.0
+pyftdi==0.52.9
+pyserial==3.5
+pyusb==1.1.1
+RPi.GPIO
+scipy==1.6.0

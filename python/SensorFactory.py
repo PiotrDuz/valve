@@ -1,0 +1,35 @@
+import board
+import busio
+from adafruit_ads1x15 import ads1015
+from adafruit_ads1x15.analog_in import AnalogIn
+
+from python.HallSensor import HallSensor
+from python.TempSensor import TempSensor
+
+
+def getInstance():
+    if HallSensorFactory._instance is None:
+        HallSensorFactory._instance = HallSensorFactory()
+    return HallSensorFactory._instance
+
+
+class HallSensorFactory:
+    _instance = None
+
+    def __init__(self):
+        i2c = busio.I2C(board.SCL, board.SDA)
+        self.ads = ads1015.ADS1015(i2c)
+        self.hallSensor = None
+        self.tempSensor = None
+
+    def getHallSensor(self) -> HallSensor:
+        if self.hallSensor is None:
+            chan = AnalogIn(self.ads, ads1015.P2, ads1015.P3)
+            self.hallSensor = HallSensor(chan, self.ads)
+        return self.hallSensor
+
+    def getTempSensor(self) -> TempSensor:
+        if self.tempSensor is None:
+            chan = AnalogIn(self.ads, ads1015.P0)
+            self.tempSensor = TempSensor(chan)
+        return self.tempSensor
