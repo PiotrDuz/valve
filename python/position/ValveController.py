@@ -1,6 +1,6 @@
 import time
 
-from python import MotorController
+from python.physical import MotorController
 from python.position import PositionCalculator
 from python.storage import FileStorage
 
@@ -27,17 +27,17 @@ class ValveController:
         fullyOpenThr = self.max * 0.98
 
         if wantedPosition < fullyCloseThr:
-            self.handleFullyClose()
-        if wantedPosition > fullyOpenThr:
-            self.handleFullyOpen()
-        if currentPosition > wantedPosition:
+            self._handleFullyClose()
+        elif wantedPosition > fullyOpenThr:
+            self._handleFullyOpen()
+        elif currentPosition > wantedPosition:
             self._handleCloseDirection(wantedPosition)
-        if currentPosition < wantedPosition:
+        elif currentPosition < wantedPosition:
             self._handleOpenDirection(wantedPosition)
         self.motor.turnOff()
 
-    def handleFullyClose(self):
-        print("Cosing fully")
+    def _handleFullyClose(self):
+        print("Closing fully")
         self.motor.setDirectionToClose()
         self.motor.turnOn()
         while True:
@@ -54,7 +54,7 @@ class ValveController:
             if position < wantedPosition:
                 break
 
-    def handleFullyOpen(self):
+    def _handleFullyOpen(self):
         print("Opening fully")
         self.motor.setDirectionToOpen()
         self.motor.turnOn()

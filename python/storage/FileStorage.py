@@ -3,6 +3,7 @@ from pathlib import Path
 
 from python.storage.DbStructure import DbStructure
 from python.storage.LookupTableReadingsToPerc import LookupTableReadingsToPerc
+from python.storage.MqttSettings import MqttSettings
 from python.storage.ValveParams import ValveParams
 
 # _filePath = Path(r"C:\Users\00pit\PROJECTS\data.dat")
@@ -21,21 +22,24 @@ class FileStorage:
     _instance = None
 
     def __init__(self):
-        self.data = DbStructure()
+        self._data = DbStructure()
         if _filePath.exists():
             with open(_filePath, 'rb') as file:
-                self.data: DbStructure = pickle.load(file)
+                self._data: DbStructure = pickle.load(file)
 
     def getAngleParams(self) -> LookupTableReadingsToPerc:
-        return self.data.lookupTable
+        return self._data.lookupTable
 
     def getValveParams(self) -> ValveParams:
-        return self.data.valveParams
+        return self._data.valveParams
 
     def setAngleParams(self, params: LookupTableReadingsToPerc):
-        self.data.lookupTable = params
+        self._data.lookupTable = params
         self.save()
+
+    def getMqttSettings(self) -> MqttSettings:
+        return self._data.mqttSettings
 
     def save(self):
         with open(_filePath, 'wb') as fileWrite:
-            pickle.dump(self.data, fileWrite, 4)
+            pickle.dump(self._data, fileWrite, 4)

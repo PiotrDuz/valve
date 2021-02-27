@@ -1,4 +1,4 @@
-from python import SensorFactory
+from python.physical import SensorFactory
 from python.position.ValveOpenLookup import ValveOpenLookup
 from python.storage import FileStorage
 

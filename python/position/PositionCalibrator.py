@@ -4,7 +4,7 @@ from typing import List
 
 import numpy as np
 
-from python import SensorFactory, MotorController
+from python.physical import MotorController, SensorFactory
 from python.storage import FileStorage
 from python.storage.LookupTableReadingsToPerc import LookupTableReadingsToPerc
 

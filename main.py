@@ -1,7 +1,7 @@
 import time
 
-from python import SensorFactory, MotorController, PositionCalibrator, ValveController
-from python.position import PositionCalculator
+from python.physical import MotorController, SensorFactory, Button, Leds
+from python.position import PositionCalculator, PositionCalibrator, ValveController
 
 if __name__ == '__main__':
     hall = SensorFactory.getInstance().getHallSensor()
@@ -9,9 +9,11 @@ if __name__ == '__main__':
     calc = PositionCalculator.getInstance()
     calibrator = PositionCalibrator.getInstance()
     valve = ValveController.getInstance()
+    button = Button.getInstance()
+    leds = Leds.getInstance()
     #
     print("Pres Enter to start")
-    val = input("2- open, 1- close, 0- claibrate, 3- setPosition")
+    val = input("2- open, 1- close, 0- claibrate, 3- setPosition, 4- button lead")
     if val == "2":
         motor.setDirectionToOpen()
         motor.turnOn()
@@ -37,3 +39,12 @@ if __name__ == '__main__':
     if val == "3":
         pos = input("Provide position..")
         valve.setValvePosition(float(pos))
+    if val == "4":
+        while True:
+            time.sleep(0.5)
+            if button.isPressed():
+                leds.setGreenOn()
+                leds.setRedOn()
+            else:
+                leds.setGreenOff()
+                leds.setRedOff()
