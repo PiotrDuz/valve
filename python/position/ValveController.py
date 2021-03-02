@@ -2,7 +2,7 @@ import time
 
 from python.physical import MotorController
 from python.position import PositionCalculator
-from python.storage import FileStorage
+from python.fileHandling.storage import FileStorage
 
 
 def getInstance():

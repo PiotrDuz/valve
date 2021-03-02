@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 
-from python.storage import FileStorage
+from python.fileHandling.storage import FileStorage
 
 
 def getInstance():

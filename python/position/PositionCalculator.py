@@ -1,6 +1,6 @@
 from python.physical import SensorFactory
 from python.position.ValveOpenLookup import ValveOpenLookup
-from python.storage import FileStorage
+from python.fileHandling.storage import FileStorage
 
 
 def getInstance():

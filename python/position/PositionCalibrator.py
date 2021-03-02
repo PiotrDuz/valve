@@ -5,8 +5,8 @@ from typing import List
 import numpy as np
 
 from python.physical import MotorController, SensorFactory
-from python.storage import FileStorage
-from python.storage.LookupTableReadingsToPerc import LookupTableReadingsToPerc
+from python.fileHandling.storage import FileStorage
+from python.fileHandling.storage import LookupTableReadingsToPerc
 
 
 def getInstance():

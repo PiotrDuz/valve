@@ -1,10 +1,10 @@
 import pickle
 from pathlib import Path
 
-from python.storage.DbStructure import DbStructure
-from python.storage.LookupTableReadingsToPerc import LookupTableReadingsToPerc
-from python.storage.MqttSettings import MqttSettings
-from python.storage.ValveParams import ValveParams
+from python.fileHandling.storage.DbStructure import DbStructure
+from python.fileHandling.storage.LookupTableReadingsToPerc import LookupTableReadingsToPerc
+from python.fileHandling.storage.MqttSettings import MqttSettings
+from python.fileHandling.storage.ValveParams import ValveParams
 
 # _filePath = Path(r"C:\Users\00pit\PROJECTS\data.dat")
 
@@ -22,10 +22,13 @@ class FileStorage:
     _instance = None
 
     def __init__(self):
-        self._data = DbStructure()
+        self._data: DbStructure = DbStructure()
         if _filePath.exists():
             with open(_filePath, 'rb') as file:
                 self._data: DbStructure = pickle.load(file)
+
+    def getSetWififScriptLocation(self) -> str:
+        return self._data.wifiScriptPath
 
     def getAngleParams(self) -> LookupTableReadingsToPerc:
         return self._data.lookupTable
