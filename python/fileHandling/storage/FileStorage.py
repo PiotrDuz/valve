@@ -27,6 +27,12 @@ class FileStorage:
             with open(_filePath, 'rb') as file:
                 self._data: DbStructure = pickle.load(file)
 
+    def getRestartScriptLocation(self):
+        return self._data.restartScriptLocation
+
+    def getAccessPointScriptLocation(self):
+        return self._data.accessPointScriptLocation
+
     def getSetWififScriptLocation(self) -> str:
         return self._data.wifiScriptPath
 

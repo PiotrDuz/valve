@@ -64,8 +64,10 @@ class MqttHandler:
     def publishTemperatureAndPosition(self):
         """ Format: temperature;position;currDate """
         if self._hasEnoughTimePassed() and self._client.is_connected() and not self._isCommandRunning:
-            print("what")
             self._publishTemperatureAndPositionWithoutValidation()
+
+    def isConnected(self):
+        return self._client.is_connected()
 
     def _publishTemperatureAndPositionWithoutValidation(self):
         temperature = 34  # self._temp.getTemp()
@@ -80,7 +82,6 @@ class MqttHandler:
 
     def _hasEnoughTimePassed(self):
         hasPassed = time.time() - self._timer > 30
-        print(str(time.time()) + str(hasPassed))
         if hasPassed:
             self._resetTimer()
         return hasPassed
