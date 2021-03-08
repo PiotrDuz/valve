@@ -41,6 +41,7 @@ if __name__ == '__main__':
 
     while True:
         if button.isPressed():
+            leds.setRedOn()
             restartService.restart()
         waitAndFlushOutputs()
 

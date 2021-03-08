@@ -13,6 +13,6 @@ class AccessPoint:
         self._location = FileStorage.getInstance().getAccessPointScriptLocation()
 
     def switchToAccessPoint(self):
-        result = subprocess.run([self._location, "start"])
+        result = subprocess.run(["sudo", self._location])
         print(result.stdout)
         print(result.stderr)

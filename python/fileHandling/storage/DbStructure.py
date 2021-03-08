@@ -9,6 +9,5 @@ class DbStructure:
         self.valveParams: ValveParams = ValveParams()
         self.mqttSettings: MqttSettings = MqttSettings()
         self.wifiScriptPath: str = "/usr/sbin/setWifi.sh"
-        self.accessPointScriptLocation: str = "/home/pi/hotspot/hotspot"
+        self.accessPointScriptLocation: str = "/usr/sbin/startAP.sh"
         self.restartScriptLocation: str = "/usr/sbin/restartValve.sh"
-        self.startAccessPointScriptLocation: str = "/usr/sbin/restartValve.sh"

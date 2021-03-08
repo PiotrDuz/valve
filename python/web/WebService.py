@@ -3,31 +3,37 @@ import time
 
 from flask import Flask, request
 
+from python.fileHandling import WifiConfigurator
+from python.fileHandling.storage import FileStorage
+from python.position import PositionCalibrator
+
 myApp = Flask(__name__)
 
 
 def start():
-    threading.Thread(myApp.run(host='0.0.0.0', port=46001)).start()
+    threading.Thread(target=_runServer).start()
 
+def _runServer():
+    myApp.run(host='0.0.0.0', port=46001)
 
 @myApp.route('/wifi', methods=['POST'])
 def setWifi():
     data = request.get_json()
-    print(data["password"])
-    print(data["login"])
+    wifi = WifiConfigurator.getInstance()
+    wifi.setWifi(data["ssid"], data["password"])
     return "OK"
 
 
 @myApp.route('/adafruit', methods=['POST'])
 def setAdafruit():
     data = request.get_json()
-    print(data["password"])
-    print(data["login"])
+    storage = FileStorage.getInstance()
+    storage.setMqttCred(data["login"], data["key"])
     return "OK"
 
 
 @myApp.route('/calibrate', methods=['POST'])
 def calibrate():
-    data = request.get_json()
-    time.sleep(5)
+    calibrator = PositionCalibrator.getInstance()
+    calibrator.calibrate()
     return "OK"

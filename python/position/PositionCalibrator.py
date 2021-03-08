@@ -6,7 +6,7 @@ import numpy as np
 
 from python.physical import MotorController, SensorFactory
 from python.fileHandling.storage import FileStorage
-from python.fileHandling.storage import LookupTableReadingsToPerc
+from python.fileHandling.storage.LookupTableReadingsToPerc import LookupTableReadingsToPerc
 
 
 def getInstance():
@@ -27,6 +27,9 @@ class PositionCalibrator:
         self.motor = MotorController.getInstance()
 
     def calibrate(self):
+        print("Set motor position to closed")
+        self._rotateValveToStartingPosition()
+
         print("Calibration process started")
         readings = self._getReadingsOpeningTheValve()
         print("Collected " + str(len(readings)) + " points.")
@@ -41,6 +44,12 @@ class PositionCalibrator:
 
         readingsToPercentageSorted2dArray = self._produceAndSort2dArray(smoothedAndCutReadings, percentages)
         self.storage.setAngleParams(LookupTableReadingsToPerc(readingsToPercentageSorted2dArray))
+
+    def _rotateValveToStartingPosition(self):
+        self.motor.setDirectionToClose()
+        self.motor.turnOn()
+        time.sleep(5)
+        self.motor.turnOff()
 
     def _produceAndSort2dArray(self, readings: List, percentages: List) -> np.ndarray:
         array2D = np.vstack((readings, percentages)).T
