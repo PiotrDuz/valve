@@ -5,5 +5,5 @@ class MqttSettings:
         self.port: int = 8883
         self.host = "io.adafruit.com"
         self.keepalive = 80
-        self.commandTopic = "pitero/feeds/test1"
-        self.telemetryTopic = "pitero/feeds/test2"
+        self.commandTopic = "pitero/feeds/command"
+        self.telemetryTopic = "pitero/feeds/telemetry"

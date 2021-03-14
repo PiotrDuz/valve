@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 from python.fileHandling.storage import FileStorage
 
@@ -16,3 +17,5 @@ class AccessPoint:
         result = subprocess.run(["sudo", self._location])
         print(result.stdout)
         print(result.stderr)
+        sys.stdout.flush()
+        sys.stderr.flush()

@@ -46,9 +46,8 @@ class FileStorage:
         self._data.lookupTable = params
         self.save()
 
-    def setMqttCred(self, log: str, key: str):
-        self._data.mqttSettings.user = log
-        self._data.mqttSettings.key = key
+    def setMqttSettings(self, settings: MqttSettings):
+        self._data.mqttSettings = settings
         self.save()
 
     def getMqttSettings(self) -> MqttSettings:

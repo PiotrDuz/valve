@@ -28,7 +28,12 @@ def setWifi():
 def setAdafruit():
     data = request.get_json()
     storage = FileStorage.getInstance()
-    storage.setMqttCred(data["login"], data["key"])
+    settings = storage.getMqttSettings()
+    settings.user = data["login"]
+    settings.key = data["key"]
+    settings.telemetryTopic = data["telemetry"]
+    settings.commandTopic = data["command"]
+    storage.setMqttSettings(settings)
     return "OK"
 
 

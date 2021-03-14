@@ -18,7 +18,7 @@ def getInstance():
 class PositionCalibrator:
     _instance = None
     _maxDurationTime = 20_000
-    _longAvgPeriod = 30
+    _longAvgPeriod = 40
     _shortAvgPeriod = 3
 
     def __init__(self):
@@ -47,9 +47,7 @@ class PositionCalibrator:
 
     def _rotateValveToStartingPosition(self):
         self.motor.setDirectionToClose()
-        self.motor.turnOn()
-        time.sleep(5)
-        self.motor.turnOff()
+        self.rotateUntilEdgePosition([])
 
     def _produceAndSort2dArray(self, readings: List, percentages: List) -> np.ndarray:
         array2D = np.vstack((readings, percentages)).T
@@ -109,12 +107,15 @@ class PositionCalibrator:
 
     def _getReadingsOpeningTheValve(self) -> List:
         readings = []
+        self.motor.setDirectionToOpen()
+        self.rotateUntilEdgePosition(readings)
+        return readings[:-PositionCalibrator._longAvgPeriod]
+
+    def rotateUntilEdgePosition(self, readings):
         longAvg = [0 for x in range(PositionCalibrator._longAvgPeriod)]
         shortAvg = [0 for x in range(PositionCalibrator._shortAvgPeriod)]
         timeStart = self._millis()
         timeOfLastSleep = timeStart
-
-        self.motor.setDirectionToOpen()
         self.motor.turnOn()
         time.sleep(0.005)  # little more for starting
         while self._millis() - timeStart < PositionCalibrator._maxDurationTime:  # prevent infinite loop
@@ -126,11 +127,10 @@ class PositionCalibrator:
             readings.append(reading)
             self._manageAverage(shortAvg, reading)
             self._manageAverage(longAvg, reading)
-            if self._hasOneSecondPassedToCompare(timeStart):
+            if self._haveSecondsPassedToCompare(timeStart):
                 if self._areArraysAveragesCloseEnough(longAvg, shortAvg):
                     break
         self.motor.turnOff()
-        return readings[:-PositionCalibrator._longAvgPeriod]
 
     def _millis(self) -> float:
         return time.time() * 1000
@@ -138,14 +138,14 @@ class PositionCalibrator:
     def _areArraysAveragesCloseEnough(self, val1: List, val2: List) -> bool:
         val1Avg = np.mean(val1)
         val2Avg = np.mean(val2)
-        return math.fabs(val1Avg - val2Avg) / val1Avg < 3.0e-15
+        return math.fabs(val1Avg - val2Avg) / val1Avg < 1.0e-17
 
     def _manageAverage(self, avg: List, value: float):
         avg.append(value)
         avg.pop(0)
 
-    def _hasOneSecondPassedToCompare(self, lastComparisionTime):
-        return self._millis() - lastComparisionTime > 1000
+    def _haveSecondsPassedToCompare(self, lastComparisionTime):
+        return self._millis() - lastComparisionTime > 2000
 
     def _splitPercentagesRangeIntoPoints(self, nb) -> List:
         end = self.storage.getValveParams().maxOpened

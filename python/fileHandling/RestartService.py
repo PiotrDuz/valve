@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 from python.fileHandling.storage import FileStorage
 
@@ -19,3 +20,5 @@ class RestartService:
         result = subprocess.run(["sudo", self._scriptPath])
         print(result.stdout)
         print(result.stderr)
+        sys.stdout.flush()
+        sys.stderr.flush()

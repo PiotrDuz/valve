@@ -13,6 +13,7 @@ def getInstance():
 
 class ValveController:
     _instance = None
+    _millsThreshold = 15_000
 
     def __init__(self):
         self.positionCalc = PositionCalculator.getInstance()
@@ -37,10 +38,10 @@ class ValveController:
         self.motor.turnOff()
 
     def _handleFullyClose(self):
-        print("Closing fully")
         self.motor.setDirectionToClose()
         self.motor.turnOn()
-        while True:
+        timeStart = self._millis()
+        while self._notTimeouted(timeStart):
             position = self.positionCalc.getPosition()
             if position < self.max * 0.1:
                 break
@@ -49,16 +50,17 @@ class ValveController:
     def _handleCloseDirection(self, wantedPosition):
         self.motor.setDirectionToClose()
         self.motor.turnOn()
-        while True:
+        timeStart = self._millis()
+        while self._notTimeouted(timeStart):
             position = self.positionCalc.getPosition()
             if position < wantedPosition:
                 break
 
     def _handleFullyOpen(self):
-        print("Opening fully")
         self.motor.setDirectionToOpen()
         self.motor.turnOn()
-        while True:
+        timeStart = self._millis()
+        while self._notTimeouted(timeStart):
             position = self.positionCalc.getPosition()
             if position > self.max * 0.9:
                 break
@@ -67,7 +69,16 @@ class ValveController:
     def _handleOpenDirection(self, wantedPosition):
         self.motor.setDirectionToOpen()
         self.motor.turnOn()
-        while True:
+        timeStart = self._millis()
+        while self._notTimeouted(timeStart):
             position = self.positionCalc.getPosition()
             if position > wantedPosition:
                 break
+
+    def _millis(self) -> float:
+        return time.time() * 1000
+
+    def _notTimeouted(self, timeStartMills):
+        if(self._millis() - timeStartMills > ValveController._millsThreshold):
+            return False
+        return True

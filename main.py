@@ -7,10 +7,43 @@ from python.web import AccessPoint, WebService
 from python.web.mqtt import MqttHandler
 
 
-def waitAndFlushOutputs():
+def wait():
     time.sleep(0.5)
-    sys.stdout.flush()
-    sys.stderr.flush()
+
+
+def startConnection() -> bool:
+    successful = True
+    try:
+        mqtt.startConnection()
+    except:
+        successful = False
+    return successful
+
+
+def handleNormalOperation():
+    while True:
+        if button.isPressed():
+            leds.setGreenOff()
+            leds.setRedOff()
+            if not mqtt.isConnected():
+                leds.setRedOn()
+            mqtt.publishTemperatureAndPosition()
+        else:
+            break
+        wait()
+
+
+def handleConfigurationMode():
+    leds.setGreenOn()
+    leds.setRedOff()
+    mqtt.stopConnection()
+    ap.switchToAccessPoint()
+    server.start()
+    while True:
+        if button.isPressed():
+            leds.setRedOn()
+            restartService.restart()
+        wait()
 
 
 if __name__ == '__main__':
@@ -21,27 +54,10 @@ if __name__ == '__main__':
     ap = AccessPoint.getInstance()
     restartService = RestartService.getInstance()
 
-    mqtt.startConnection()
-    while True:
-        if button.isPressed():
-            leds.setGreenOff()
-            leds.setRedOff()
-            if not mqtt.isConnected():
-                leds.setRedOn()
-            mqtt.publishTemperatureAndPosition()
-        else:
-            break
-        waitAndFlushOutputs()
+    status = startConnection()
 
-    leds.setGreenOn()
-    leds.setRedOff()
-    mqtt.stopConnection()
-    ap.switchToAccessPoint()
-    server.start()
+    if status:
+        handleNormalOperation()
 
-    while True:
-        if button.isPressed():
-            leds.setRedOn()
-            restartService.restart()
-        waitAndFlushOutputs()
+    handleConfigurationMode()
 
