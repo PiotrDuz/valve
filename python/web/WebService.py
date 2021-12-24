@@ -33,6 +33,9 @@ def setAdafruit():
     settings.key = data["key"]
     settings.telemetryTopic = data["telemetry"]
     settings.commandTopic = data["command"]
+    settings.host = data["host"]
+    settings.port = data["port"]
+    settings.secured = data["secured"]
     storage.setMqttSettings(settings)
     return "OK"
 

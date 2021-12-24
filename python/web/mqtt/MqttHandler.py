@@ -28,7 +28,8 @@ class MqttHandler:
         self._setupClient()
 
     def _setupClient(self):
-        self._client.tls_set_context()
+        if self._settings.secured == "yes":
+            self._client.tls_set_context()
         self._client.username_pw_set(self._settings.user, self._settings.key)
         self._client.on_connect = self._mqttConnect
         self._client.on_disconnect = self._mqttDisconnect
@@ -36,7 +37,7 @@ class MqttHandler:
         # self._client.on_subscribe = self._mqtt_subscribe
 
     def startConnection(self):
-        self._client.connect(self._settings.host, port=self._settings.port,
+        self._client.connect(self._settings.host, port=int(self._settings.port),
                              keepalive=self._settings.keepalive)
         self._client.loop_start()
 

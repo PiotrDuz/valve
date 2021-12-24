@@ -27,10 +27,12 @@ class ValveController:
         fullyCloseThr = self.max * 0.02
         fullyOpenThr = self.max * 0.98
 
-        if wantedPosition < fullyCloseThr:
+        if currentPosition > fullyCloseThr and wantedPosition < fullyCloseThr:
             self._handleFullyClose()
-        elif wantedPosition > fullyOpenThr:
+        elif currentPosition < fullyOpenThr and wantedPosition > fullyOpenThr:
             self._handleFullyOpen()
+        elif currentPosition < wantedPosition * 1.05 and currentPosition > wantedPosition * 0.95:
+            return
         elif currentPosition > wantedPosition:
             self._handleCloseDirection(wantedPosition)
         elif currentPosition < wantedPosition:
