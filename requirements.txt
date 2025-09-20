@@ -10,7 +10,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.3
 jsonpickle==2.0.0
 MarkupSafe==1.1.1
-numpy==1.20.0
+numpy==2.3.3
 paho-mqtt==1.5.1
 pyftdi==0.52.9
 pyserial==3.5
