@@ -1,2 +1,2 @@
 #!/bin/bash
-/home/pi/hotspot/hotspot start
+sudo nmcli device wifi hotspot ssid "dzaworWIFI" password "dzawor"
