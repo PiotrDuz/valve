@@ -1,5 +1,5 @@
-Adafruit-Blinka==6.0.1
-adafruit-circuitpython-ads1x15==2.2.6
+Adafruit-Blinka==8.66.0
+adafruit-circuitpython-ads1x15==2.4.4
 adafruit-circuitpython-busdevice==5.2.13
 Adafruit-GPIO==1.0.3
 Adafruit-PlatformDetect==3.19.5
