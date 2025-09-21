@@ -1,2 +1,2 @@
 #!/bin/bash
-/usr/bin/python3 /home/pi/app/main.py | rotatelogs logs.log 100M
+/home/pi/new_venv/bin/python /home/pi/valve/main.py | rotatelogs logs.log 100M
