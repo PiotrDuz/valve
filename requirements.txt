@@ -1,6 +1,5 @@
 Adafruit-Blinka==8.66.0
 adafruit-circuitpython-ads1x15==2.4.4
-adafruit-circuitpython-busdevice==5.2.13
 click==7.1.2
 Flask==1.1.2
 itsdangerous==1.1.0
