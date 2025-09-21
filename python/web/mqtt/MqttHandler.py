@@ -54,12 +54,16 @@ class MqttHandler:
         """Format: position;date """
         if msg.topic == self._settings.commandTopic:
             self._isCommandRunning = True
-            payload: str = msg.payload.decode('utf-8')
-            wantedValvePosition = float(payload.split(";")[0])
-            self._valve.setValvePosition(wantedValvePosition)
-            self._resetTimer()
-            self._publishTemperatureAndPositionWithoutValidation()
-            self._isCommandRunning = False
+            try:
+                payload: str = msg.payload.decode('utf-8')
+                wantedValvePosition = float(payload.split(";")[0])
+                self._valve.setValvePosition(wantedValvePosition)
+                self._resetTimer()
+                self._publishTemperatureAndPositionWithoutValidation()
+                self._isCommandRunning = False
+            except:
+                self._isCommandRunning = False
+                raise
 
     def publishTemperatureAndPosition(self):
         """ Format: temperature;position;currDate """
