@@ -2,7 +2,7 @@ Adafruit-Blinka==6.0.1
 adafruit-circuitpython-ads1x15==2.2.6
 adafruit-circuitpython-busdevice==5.0.4
 Adafruit-GPIO==1.0.3
-Adafruit-PlatformDetect==3.0.0
+Adafruit-PlatformDetect==3.19.5
 Adafruit-PureIO==1.1.8
 click==7.1.2
 Flask==1.1.2
