@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo nmcli device wifi hotspot ssid "dzaworWIFI" password "dzawor"
+sudo nmcli device wifi hotspot ssid "dzaworWIFI" password "dzawor123"
