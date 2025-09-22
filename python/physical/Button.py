@@ -9,14 +9,13 @@ def getInstance():
 
 class Button:
     _instance = None
-    _pressedState = False
 
     def __init__(self):
         self._pin = 16
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        GPIO.setup(self._pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self._pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-    def isPressed(self):
+    def isNotPressed(self):
         state = GPIO.input(self._pin)
-        return state == Button._pressedState
+        return state == True

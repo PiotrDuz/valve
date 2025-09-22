@@ -23,7 +23,7 @@ def startConnection() -> bool:
 def handleNormalOperation():
     print("Normal operation")
     while True:
-        if button.isPressed():
+        if button.isNotPressed():
             leds.setGreenOff()
             leds.setRedOff()
             if not mqtt.isConnected():
@@ -32,7 +32,7 @@ def handleNormalOperation():
         else:
             break
         wait()
-        print("Button: " + str(button.isPressed()))
+        print("Button: " + str(button.isNotPressed()))
 
 
 def handleConfigurationMode():
@@ -43,11 +43,11 @@ def handleConfigurationMode():
     ap.switchToAccessPoint()
     server.start()
     while True:
-        if button.isPressed():
+        if button.isNotPressed():
             leds.setRedOn()
             restartService.restart()
         wait()
-        print("Button: " + str(button.isPressed()))
+        print("Button: " + str(button.isNotPressed()))
 
 
 if __name__ == '__main__':
