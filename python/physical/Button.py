@@ -12,7 +12,7 @@ class Button:
     _pressedState = False
 
     def __init__(self):
-        self._pin = 18
+        self._pin = 16
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(self._pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)

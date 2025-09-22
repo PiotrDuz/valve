@@ -13,31 +13,32 @@ class MotorController:
     _instance = None
 
     def __init__(self):
-        self._enablePin = 13
-        self._dirPin = 26
+        self.pins = [24, 23]
         self._setupPins()
-        self._changePin(self._enablePin, GPIO.LOW)
         self._closeDir = FileStorage.getInstance().getValveParams().closeDirection
-        self._openDir = not self._closeDir
+        self._currentDir = self._closeDir
 
 
     def _setupPins(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        GPIO.setup(self._enablePin, GPIO.OUT)
-        GPIO.setup(self._dirPin, GPIO.OUT)
+        GPIO.setup(self._in1, GPIO.OUT)
+        GPIO.setup(self._in2, GPIO.OUT)
+        self._changePin(self._in1, GPIO.LOW)
+        self._changePin(self._in2, GPIO.LOW)
 
     def setDirectionToClose(self):
-        self._changePin(self._dirPin, self._closeDir)
+        self._currentDir = self._closeDir
 
     def setDirectionToOpen(self):
-        self._changePin(self._dirPin, self._openDir)
+        self._currentDir = not self._closeDir
 
     def turnOn(self):
-        self._changePin(self._enablePin, GPIO.HIGH)
+        self._changePin(self.pins[int(self._currentDir)], GPIO.LOW)
+        self._changePin(self.pins[int(not self._currentDir)], GPIO.HIGH)
 
     def turnOff(self):
-        self._changePin(self._enablePin, GPIO.LOW)
+        self._changePin(self.pins[int(not self._currentDir)], GPIO.LOW)
 
     def _changePin(self, pin: int, value: bool):
         GPIO.setmode(GPIO.BCM)
