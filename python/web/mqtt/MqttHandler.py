@@ -45,7 +45,7 @@ class MqttHandler:
         self._client.loop_stop()
 
     def _mqttDisconnect(self, client, userdata, rc):
-        pass
+        print("Disconnected mqtt!")
 
     def _mqttConnect(self, client, userdata, flags, rc):
         self._client.subscribe(self._settings.commandTopic)
