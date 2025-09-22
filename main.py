@@ -22,15 +22,12 @@ def startConnection() -> bool:
 
 def handleNormalOperation():
     print("Normal operation")
-    while True:
-        if button.isNotPressed():
-            leds.setGreenOff()
-            leds.setRedOff()
-            if not mqtt.isConnected():
-                leds.setRedOn()
-            mqtt.publishTemperatureAndPosition()
-        else:
-            break
+    leds.setGreenOff()
+    leds.setRedOff()
+    while button.isNotPressed():
+        if not mqtt.isConnected():
+            leds.setRedOn()
+        mqtt.publishTemperatureAndPosition()
         wait()
         print("Button: " + str(button.isNotPressed()))
 
@@ -42,13 +39,11 @@ def handleConfigurationMode():
     mqtt.stopConnection()
     ap.switchToAccessPoint()
     server.start()
-    while True:
-        if button.isNotPressed():
-            leds.setRedOn()
-            restartService.restart()
+    while button.isNotPressed():
         wait()
-        print("Button: " + str(button.isNotPressed()))
-
+    leds.setRedOn()
+    leds.setGreenOn()
+    restartService.restart()
 
 if __name__ == '__main__':
     server = WebService
