@@ -21,6 +21,7 @@ def startConnection() -> bool:
 
 
 def handleNormalOperation():
+    print("Normal operation")
     while True:
         if button.isPressed():
             leds.setGreenOff()
@@ -31,9 +32,11 @@ def handleNormalOperation():
         else:
             break
         wait()
+        print("Button: " + str(button.isPressed()))
 
 
 def handleConfigurationMode():
+    print("Configuration mode")
     leds.setGreenOn()
     leds.setRedOff()
     mqtt.stopConnection()
@@ -44,6 +47,7 @@ def handleConfigurationMode():
             leds.setRedOn()
             restartService.restart()
         wait()
+        print("Button: " + str(button.isPressed()))
 
 
 if __name__ == '__main__':
