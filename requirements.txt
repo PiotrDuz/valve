@@ -1,7 +1,6 @@
 Adafruit-Blinka==8.66.0
 adafruit-circuitpython-ads1x15==2.4.4
 Flask==3.1.2
-Jinja2==2.11.3
 jsonpickle==2.0.0
 MarkupSafe==1.1.1
 numpy==2.3.3
