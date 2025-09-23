@@ -1,3 +1,4 @@
+import logging
 import threading
 import time
 
@@ -14,6 +15,7 @@ def start():
     threading.Thread(target=_runServer).start()
 
 def _runServer():
+    myApp.logger.setLevel(logging.DEBUG)
     myApp.run(host='0.0.0.0', port=46001, debug=False)
 
 @myApp.route('/wifi', methods=['POST'])
