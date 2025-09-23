@@ -1,5 +1,6 @@
 import subprocess
 import sys
+import time
 
 from python.fileHandling.storage import FileStorage
 
@@ -19,3 +20,9 @@ class AccessPoint:
         print(result.stderr)
         sys.stdout.flush()
         sys.stderr.flush()
+        hostname = ""
+        startTime = time.time()
+        while ("10.42." not in hostname) or (time.time() - startTime < 20):
+          hostname = subprocess.run(["hostname", "-I"]).stdout
+          time.sleep(0.5)
+        time.sleep(5)

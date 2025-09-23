@@ -53,11 +53,8 @@ if __name__ == '__main__':
     ap = AccessPoint.getInstance()
     restartService = RestartService.getInstance()
 
-    server.start()
-    while button.isNotPressed():
-        wait()
-    # status = startConnection()
-    # if status:
-    #     handleNormalOperation()
-    # handleConfigurationMode()
+    status = startConnection()
+    if status:
+        handleNormalOperation()
+    handleConfigurationMode()
 
