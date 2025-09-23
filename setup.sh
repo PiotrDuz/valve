@@ -3,7 +3,7 @@
 # username is: dzawor
 sudo apt-get update
 sudo apt-get -y install python3
-git clone https://github.com/PiotrDuz/valve.git
+#git clone https://github.com/PiotrDuz/valve.git
 python3 -m venv new_venv
 new_venv/bin/pip install -r valve/requirements.txt
 echo 'setup files'
