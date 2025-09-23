@@ -29,7 +29,6 @@ def handleNormalOperation():
             leds.setRedOn()
         mqtt.publishTemperatureAndPosition()
         wait()
-        print("Button: " + str(button.isNotPressed()))
 
 
 def handleConfigurationMode():
