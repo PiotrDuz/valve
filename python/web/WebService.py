@@ -14,7 +14,7 @@ def start():
     threading.Thread(target=_runServer).start()
 
 def _runServer():
-    myApp.run(host='0.0.0.0', port=46001, debug=True)
+    myApp.run(host='0.0.0.0', port=46001, debug=False)
 
 @myApp.route('/wifi', methods=['POST'])
 def setWifi():
