@@ -16,7 +16,7 @@ sudo mv valve/startAP.sh /usr/sbin
 sudo echo 'dzawor ALL=(ALL) NOPASSWD: /usr/sbin/setWifi.sh' >> /etc/sudoers
 sudo echo 'dzawor ALL=(ALL) NOPASSWD: /usr/sbin/restartValve.sh' >> /etc/sudoers
 sudo echo 'dzawor ALL=(ALL) NOPASSWD: /usr/sbin/startAP.sh' >> /etc/sudoers
-#sudo apt-get install apache2-utils rotate logs not needed
+sudo apt-get install apache2-utils # for rotatelogs
 chmod +x valve/launch.sh
 echo "
 [Unit]
