@@ -6,11 +6,7 @@ from python.fileHandling.storage.LookupTableReadingsToPerc import LookupTableRea
 from python.fileHandling.storage.MqttSettings import MqttSettings
 from python.fileHandling.storage.ValveParams import ValveParams
 
-# _filePath = Path(r"C:\Users\00pit\PROJECTS\data.dat")
-
-
-_filePath = Path("/home/pi/db/data.dat")
-
+_filePath = Path("/home/dzawor/data.dat")
 
 def getInstance():
     if FileStorage._instance is None:
