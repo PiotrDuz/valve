@@ -16,7 +16,7 @@ sudo mv valve/startAP.sh /usr/sbin
 sudo echo 'dzawor ALL=(ALL) NOPASSWD: /usr/sbin/setWifi.sh' >> /etc/sudoers
 sudo echo 'dzawor ALL=(ALL) NOPASSWD: /usr/sbin/restartValve.sh' >> /etc/sudoers
 sudo echo 'dzawor ALL=(ALL) NOPASSWD: /usr/sbin/startAP.sh' >> /etc/sudoers
-sudo apt-get install apache2-utils # for rotatelogs
+#sudo apt-get install apache2-utils # rotatelogs not needed
 chmod +x valve/launch.sh
 echo "
 [Unit]
@@ -25,11 +25,10 @@ Description=dzawor service
 Type=simple
 Restart=always
 RestartSec=2
-StandardOutput=append:/home/dzawor/logs.txt
-StandardError=append:/home/dzawor/logs.txt
-ExecStartPre=find /home/dzawor/logs.txt -size +100M -delete
 User=dzawor
-ExecStart=/home/dzawor/new_venv/bin/python /home/dzawor/valve/main.py
+StandardOutput=file:/home/dzawor/stdout.log
+StandardError=file:/home/dzawor/stderr.log
+ExecStart=/home/dzawor/valve/launch.sh
 [Install]
 WantedBy=multi-user.target
 " > /etc/systemd/system/dzawor.service
