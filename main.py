@@ -7,6 +7,10 @@ from python.position import ValveController
 from python.web import AccessPoint, WebService
 from python.web.mqtt import MqttHandler
 
+import board
+import busio
+from adafruit_ads1x15 import ads1015
+from adafruit_ads1x15.analog_in import AnalogIn
 
 def wait():
     time.sleep(0.5)
@@ -52,13 +56,14 @@ if __name__ == '__main__':
     mqtt = MqttHandler.getInstance()
     ap = AccessPoint.getInstance()
     restartService = RestartService.getInstance()
-    hall = SensorFactory.getInstance().getHallSensor()
-    print('started hall')
-    for i in range(100):
-        print(hall.getValue())
-        print(hall.getVoltage())
+
+    i2c = busio.I2C(board.SCL, board.SDA)
+    ads = ads1015.ADS1015(i2c, data_rate=2400, gain=4)
+    chan1 = AnalogIn(ads, ads1015.P2)
+    chan2 = AnalogIn(ads, ads1015.P3)
+    for i in range(240):
+        print('chan1: '+chan1.value + ' v1: ' + chan1.voltage + ' chan2: ' + chan2.value + ' v2:' + chan2.voltage)
         wait()
-    print('stopped hall')
 
     # status = startConnection()
     # if status:
