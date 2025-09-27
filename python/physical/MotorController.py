@@ -37,7 +37,8 @@ class MotorController:
         self._changePin(self._pins[int(not self._currentDir)], GPIO.HIGH)
 
     def turnOff(self):
-        self._changePin(self._pins[int(not self._currentDir)], GPIO.LOW)
+        for pin in self._pins:
+            self._changePin(pin, GPIO.LOW)
 
     def _changePin(self, pin: int, value: bool):
         GPIO.setmode(GPIO.BCM)
