@@ -62,7 +62,7 @@ if __name__ == '__main__':
     chan1 = AnalogIn(ads, ads1015.P2)
     chan2 = AnalogIn(ads, ads1015.P3)
     for i in range(240):
-        print('chan1: '+chan1.value + ' v1: ' + chan1.voltage + ' chan2: ' + chan2.value + ' v2:' + chan2.voltage)
+        print('chan1: '+str(chan1.value) + ' v1: ' + str(chan1.voltage) + ' chan2: ' + str(chan2.value) + ' v2:' + str(chan2.voltage))
         wait()
 
     # status = startConnection()
