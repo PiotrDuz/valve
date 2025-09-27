@@ -58,7 +58,7 @@ if __name__ == '__main__':
     restartService = RestartService.getInstance()
 
     i2c = busio.I2C(board.SCL, board.SDA)
-    ads = ads1015.ADS1015(i2c, data_rate=2400, gain=4)
+    ads = ads1015.ADS1015(i2c, data_rate=2400, gain=1)
     chan1 = AnalogIn(ads, ads1015.P2)
     chan2 = AnalogIn(ads, ads1015.P3)
     for i in range(240):
