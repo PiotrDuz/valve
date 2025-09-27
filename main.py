@@ -2,7 +2,7 @@ import sys
 import time
 
 from python.fileHandling import RestartService
-from python.physical import Button, Leds, MotorController
+from python.physical import Button, Leds, MotorController, SensorFactory
 from python.position import ValveController
 from python.web import AccessPoint, WebService
 from python.web.mqtt import MqttHandler
@@ -52,14 +52,12 @@ if __name__ == '__main__':
     mqtt = MqttHandler.getInstance()
     ap = AccessPoint.getInstance()
     restartService = RestartService.getInstance()
-    motor = MotorController.getInstance()
-    motor.setDirectionToOpen()
-    motor.turnOn()
-    print("Turned on motor")
-    for i in range(240):
+    hall = SensorFactory.getInstance().getHallSensor()
+    print('started hall')
+    for i in range(100):
+        print(hall.getValue())
         wait()
-    motor.turnOff()
-    print("TUrned off motor")
+    print('stopped hall')
 
     # status = startConnection()
     # if status:
