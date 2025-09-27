@@ -18,7 +18,7 @@ class HallSensorFactory:
 
     def __init__(self):
         i2c = busio.I2C(board.SCL, board.SDA)
-        self.ads = ads1015.ADS1015(i2c, data_rate=2400, gain=4)
+        self.ads = ads1015.ADS1015(i2c, data_rate=2400, gain=2)
         self.hallSensor = None
         self.tempSensor = None
 
