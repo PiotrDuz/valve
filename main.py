@@ -56,6 +56,7 @@ if __name__ == '__main__':
     print('started hall')
     for i in range(100):
         print(hall.getValue())
+        print(hall.getVoltage())
         wait()
     print('stopped hall')
 

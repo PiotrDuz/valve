@@ -10,6 +10,10 @@ class HallSensor:
         value = self.channel.value
         return value
 
+    def getVoltage(self):
+        value = self.channel.voltage
+        return value
+
     def getAveragedValue(self, avgPeriod):
         valueSum = 0
         for x in range(0, avgPeriod):
