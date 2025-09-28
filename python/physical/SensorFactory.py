@@ -30,6 +30,6 @@ class HallSensorFactory:
 
     def getTempSensor(self) -> TempSensor:
         if self.tempSensor is None:
-            chan = AnalogIn(self.ads, ads1015.P0)
+            chan = AnalogIn(self.ads, ads1015.P0, ads1015.P1)
             self.tempSensor = TempSensor(chan)
         return self.tempSensor

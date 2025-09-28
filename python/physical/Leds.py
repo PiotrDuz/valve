@@ -9,8 +9,8 @@ def getInstance():
 class Leds:
     _instance = None
     def __init__(self):
-        self._red = 5
-        self._green = 6
+        self._red = 6
+        self._green = 5
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(self._red, GPIO.OUT)
