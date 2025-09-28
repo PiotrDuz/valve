@@ -18,6 +18,7 @@ def _runServer():
     myApp.logger.setLevel(logging.DEBUG)
     myApp.run(host='0.0.0.0', port=46001, debug=False)
 
+#Doesnt work!!! use nmcli
 @myApp.route('/wifi', methods=['POST'])
 def setWifi():
     data = request.get_json()
