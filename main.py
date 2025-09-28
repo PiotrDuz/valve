@@ -36,7 +36,7 @@ def handleNormalOperation():
             leds.setGreenOn()
             switchLed = False
         else:
-            leds.setRedOff()
+            leds.setGreenOff()
             switchLed = True
         wait()
     leds.setGreenOff()
