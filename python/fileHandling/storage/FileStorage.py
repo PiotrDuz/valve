@@ -46,6 +46,10 @@ class FileStorage:
         self._data.mqttSettings = settings
         self.save()
 
+    def changeCloseDirection(self):
+        self._data.valveParams.closeDirection = not self._data.valveParams.closeDirection
+        self.save()
+
     def getMqttSettings(self) -> MqttSettings:
         return self._data.mqttSettings
 

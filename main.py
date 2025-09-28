@@ -46,15 +46,32 @@ def handleNormalOperation():
 def handleConfigurationMode():
     print("Configuration mode")
     leds.setGreenOn()
-    leds.setRedOff()
+    leds.setRedOn()
     mqtt.stopConnection()
     ap.switchToAccessPoint()
     server.start()
     while button.isNotPressed():
         wait()
-    leds.setRedOn()
+    leds.setRedOff()
     leds.setGreenOn()
     restartService.restart()
+
+def isCalibrationPressed() -> bool:
+    print('Inline calibration')
+    stopTime = time.time()
+    while button.isPressed() and (time.time() - stopTime) < 7:
+        if (time.time() - stopTime) >= 5:
+            return True
+    return False
+
+
+def calibrateInline():
+    leds.setGreenOn()
+    calibrator.calibrate()
+    leds.setRedOn()
+    restartService.restart()
+    wait()
+
 
 if __name__ == '__main__':
     server = WebService
@@ -69,12 +86,8 @@ if __name__ == '__main__':
     if status:
         handleNormalOperation()
     wait()
-    stopTime = time.time()
-    while button.isPressed() and (time.time() - stopTime) < 7:
-        if (time.time() - stopTime) > 5:
-            leds.setGreenOn()
-            calibrator.calibrate()
-            restartService.restart()
-            wait()
-    handleConfigurationMode()
+    if isCalibrationPressed():
+        calibrateInline()
+    else:
+        handleConfigurationMode()
 

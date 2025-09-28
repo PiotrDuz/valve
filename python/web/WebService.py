@@ -47,3 +47,9 @@ def calibrate():
     calibrator = PositionCalibrator.getInstance()
     calibrator.calibrate()
     return "OK"
+
+@myApp.route('/direction', methods=['POST'])
+def changeDirection():
+    storage = FileStorage.getInstance()
+    storage.changeCloseDirection()
+    return "Remember to re-calibrate!"
