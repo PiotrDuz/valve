@@ -27,7 +27,9 @@ def handleNormalOperation():
     while button.isNotPressed():
         if not mqtt.isConnected():
             leds.setRedOn()
-        mqtt.publishTemperatureAndPosition()
+        else:
+            leds.setRedOff()
+            mqtt.publishTemperatureAndPosition()
         wait()
 
 
