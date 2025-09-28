@@ -3,6 +3,7 @@ import time
 
 from python.fileHandling import RestartService
 from python.physical import Button, Leds
+from python.position import PositionCalibrator
 from python.web import AccessPoint, WebService
 from python.web.mqtt import MqttHandler
 
@@ -24,13 +25,22 @@ def handleNormalOperation():
     print("Normal operation")
     leds.setGreenOff()
     leds.setRedOff()
+    switchLed = False
     while button.isNotPressed():
         if not mqtt.isConnected():
             leds.setRedOn()
         else:
             leds.setRedOff()
             mqtt.publishTemperatureAndPosition()
+        if switchLed:
+            leds.setGreenOn()
+            switchLed = False
+        else:
+            leds.setRedOff()
+            switchLed = True
         wait()
+    leds.setGreenOff()
+    mqtt.stopConnection()
 
 
 def handleConfigurationMode():
@@ -53,9 +63,18 @@ if __name__ == '__main__':
     mqtt = MqttHandler.getInstance()
     ap = AccessPoint.getInstance()
     restartService = RestartService.getInstance()
+    calibrator = PositionCalibrator.getInstance()
 
     status = startConnection()
     if status:
         handleNormalOperation()
+    wait()
+    stopTime = time.time()
+    while button.isPressed() and (time.time() - stopTime) < 7:
+        if (time.time() - stopTime) > 5:
+            leds.setGreenOn()
+            calibrator.calibrate()
+            restartService.restart()
+            wait()
     handleConfigurationMode()
 

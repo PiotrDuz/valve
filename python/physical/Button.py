@@ -19,3 +19,6 @@ class Button:
     def isNotPressed(self):
         state = GPIO.input(self._pin)
         return state == True
+
+    def isPressed(self):
+        return not self.isNotPressed()
