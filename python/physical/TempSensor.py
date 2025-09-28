@@ -8,5 +8,5 @@ class TempSensor:
 
     def getTemp(self):
         rawValueMiliV = self._channel.voltage * 1000  # voltages not affected by gain
-        temp = (rawValueMiliV - 500) / 10.0
-        return temp
+        temp = (rawValueMiliV - 750) / 10.0
+        return temp + 25.0
